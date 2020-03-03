@@ -1,0 +1,2 @@
+# Solucionador
+Solucionador de laberintos
