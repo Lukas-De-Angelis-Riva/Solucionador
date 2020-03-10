@@ -5,6 +5,7 @@
 
 #include "Nodo.h"
 
+template <class T> class IteradorLista;
 
 /*
  *
@@ -26,98 +27,102 @@ class Lista{
 
 	public:
 
+		/*
+		 * Iterador Externo de la lista
+		 */
+		friend class IteradorLista<T>;
 
-	/* Pre:
-	 * Post: Crea una lista vacia
-	 */
-	Lista();
-
-
-	/* Pre:
-	 * Post: Crea una lista copiando lo de otraLista
-	 */
-	Lista(Lista& otraLista);
+		/* Pre:
+		 * Post: Crea una lista vacia
+		 */
+		Lista();
 
 
-	/* Pre:
-	 * Post: Agrega un elemento al fina de la lista
-	 */
-	void agregar(T elemento);
+		/* Pre:
+		 * Post: Crea una lista copiando lo de otraLista
+		 */
+		Lista(Lista& otraLista);
 
 
-	/* Pre: Posicion pertenece al intervalo [1, cantidadElementos() + 1]
-	 * Post: Agrega el elemento en la posicion indicada desplazando a los demas
-	 */
-	void agregar(T elemento, unsigned int posicion);
+		/* Pre:
+		 * Post: Agrega un elemento al fina de la lista
+		 */
+		void agregar(T elemento);
 
 
-	/* Pre:
-	 * Post: Agrega otraLista al final de la Lista
-	 */
-	void agregar(Lista& otraLista);
-
-	/* Pre: Posicion pertenece al intervalo [1, contarElementos()]
-	 * Post: Remplaza el elemento en posicion con nuevoElemento
-	 */
-	void asignar(T elemento, unsigned int posicion);
+		/* Pre: Posicion pertenece al intervalo [1, cantidadElementos() + 1]
+		 * Post: Agrega el elemento en la posicion indicada desplazando a los demas
+		 */
+		void agregar(T elemento, unsigned int posicion);
 
 
-	/* Pre: Posicion pertenece al intervalo [1, contarElementos()]
-	 * Post: Devuelve el elemento en esa posicion
-	 */
-	T obtener(unsigned int posicion);
+		/* Pre:
+		 * Post: Agrega otraLista al final de la Lista
+		 */
+		void agregar(Lista& otraLista);
+
+		/* Pre: Posicion pertenece al intervalo [1, contarElementos()]
+		 * Post: Remplaza el elemento en posicion con nuevoElemento
+		 */
+		void asignar(T elemento, unsigned int posicion);
 
 
-	/* Pre: Posicion pertenece al intervalo [1, contarElementos()]
-	 * Post: Remueve el elemento desplazando a los demas
-	 */
-	void remover(unsigned int posicion);
+		/* Pre: Posicion pertenece al intervalo [1, contarElementos()]
+		 * Post: Devuelve el elemento en esa posicion
+		 */
+		T obtener(unsigned int posicion);
 
 
-	/* Pre:
-	 * Post: Devuelve true si estaVacia
-	 */
-	bool estaVacia() const;
+		/* Pre: Posicion pertenece al intervalo [1, contarElementos()]
+		 * Post: Remueve el elemento desplazando a los demas
+		 */
+		void remover(unsigned int posicion);
 
 
-	/* Pre:
-	 * Post: Devuelve la cantidaElementos
-	 */
-	unsigned int cantidadElementos() const;
+		/* Pre:
+		 * Post: Devuelve true si estaVacia
+		 */
+		bool estaVacia() const;
 
 
-	/* Pre:
-	 * Post: incial el cursor para poder avanzarCursor
-	 */
-	void iniciarCursor();
+		/* Pre:
+		 * Post: Devuelve la cantidaElementos
+		 */
+		unsigned int cantidadElementos() const;
 
 
-	/* Pre: Se ha iniciado el cursor y desde entonces no se han removido o
-	 * agregado elementos
-	 * Post: Avanza el cursor devolviendo true si esta sobre un elemento
-	 *  o false si se encuentra apuntando a NULL
-	 */
-	bool avanzarCursor();
+		/* Pre:
+		 * Post: incial el cursor para poder avanzarCursor
+		 */
+		void iniciarCursor();
 
 
-	/* Pre: Se ha iniciado el cursor y se ha avanzado el cursor
-	 * Post: Devuelve el elemento al que apunta el cursor
-	 */
-	T obtenerCursor();
+		/* Pre: Se ha iniciado el cursor y desde entonces no se han removido o
+		 * agregado elementos
+		 * Post: Avanza el cursor devolviendo true si esta sobre un elemento
+		 *  o false si se encuentra apuntando a NULL
+		 */
+		bool avanzarCursor();
 
 
-	/* Pre:
-	 * Post: Libera los recursos tomados por la Lista
-	 */
-	~Lista();
+		/* Pre: Se ha iniciado el cursor y se ha avanzado el cursor
+		 * Post: Devuelve el elemento al que apunta el cursor
+		 */
+		T obtenerCursor();
+
+
+		/* Pre:
+		 * Post: Libera los recursos tomados por la Lista
+		 */
+		~Lista();
 
 	private:
 
 
-	/* Pre: Posicion pertenece al intervalo [1, cantidadElementos()]
-	 * Post: Devuelve un puntero al nodo en dicha posicion
-	 */
-	Nodo<T> * obtenerNodo(unsigned int posicion);
+		/* Pre: Posicion pertenece al intervalo [1, cantidadElementos()]
+		 * Post: Devuelve un puntero al nodo en dicha posicion
+		 */
+		Nodo<T> * obtenerNodo(unsigned int posicion);
 
 };
 
