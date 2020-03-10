@@ -263,7 +263,7 @@ void Lista<T>::remover(unsigned int posicion){
 	if(posicion == 1){
 
 		nodoARemover = this->primero;
-		this->primero == nodoARemover->obtenerSiguiente();
+		this->primero = nodoARemover->obtenerSiguiente();
 
 		if(this->cantidadElementos() == 1){
 			this->ultimo = NULL;
