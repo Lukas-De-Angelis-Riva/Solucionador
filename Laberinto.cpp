@@ -2,6 +2,7 @@
 
 using namespace std;
 
+
 Laberinto::Laberinto(std::string rutaDelLaberinto){
 
 	this->imagen = new BMP;
@@ -111,10 +112,10 @@ void Laberinto::convertirImagenEnMatriz(){
 
 			if(this->esNegro(i, j)){
 
-				this->matriz[j][i] = VALOR_PARED;
+				this->matriz[i][j] = VALOR_PARED;
 			}else{
 
-				this->matriz[j][i] = VALOR_PASILLO;
+				this->matriz[i][j] = VALOR_PASILLO;
 			}
 		}
 	}
@@ -123,10 +124,10 @@ void Laberinto::convertirImagenEnMatriz(){
 
 bool Laberinto::esNegro(int alto, int ancho){
 
-	int rojo = (int)((*this->imagen)(alto, ancho)->Red);
-	int azul = (int)((*this->imagen)(alto, ancho)->Blue);
-	int verde = (int)((*this->imagen)(alto, ancho)->Green);
-	int alpha = (int)((*this->imagen)(alto, ancho)->Alpha);
+	int rojo = (int)((*this->imagen)(ancho, alto)->Red);
+	int azul = (int)((*this->imagen)(ancho, alto)->Blue);
+	int verde = (int)((*this->imagen)(ancho, alto)->Green);
+	int alpha = (int)((*this->imagen)(ancho, alto)->Alpha);
 
 	return ( rojo == 0 &&
 			 azul == 0 &&

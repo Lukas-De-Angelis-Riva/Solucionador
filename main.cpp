@@ -14,7 +14,7 @@ int main(int argc, char** argv){
 	//std::string laberinto = argv[2];
 
 	std::string metodo = "Dijkstra";
-	std::string laberinto = "perfect.bmp";
+	std::string laberinto = "perfect65x33.bmp";
  	Solucionador * solucionador = new Solucionador(metodo, laberinto);
  	solucionador->solucionar();
  	delete solucionador;
