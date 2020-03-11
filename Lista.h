@@ -30,7 +30,7 @@ class Lista{
 		/*
 		 * Iterador Externo de la lista
 		 */
-		friend class IteradorLista;
+		friend class IteradorLista<T>;
 
 		/* Pre:
 		 * Post: Crea una lista vacia
