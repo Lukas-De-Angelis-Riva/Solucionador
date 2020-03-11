@@ -3,6 +3,7 @@
 #include "Conversor.h"
 #include "Pruebas/pruebas.h"
 #include "Pruebas/Tester.h"
+#include "Solucionador.h"
 using namespace std;
 
 
@@ -12,6 +13,12 @@ int main(int argc, char** argv){
 	//std::string metodoDeSolucion = argv[1];
 	//std::string laberinto = argv[2];
 
+	std::string metodo = "Dijkstra";
+	std::string laberinto = "ejemplo5.bmp";
+ 	Solucionador * solucionador = new Solucionador(metodo, laberinto);
+ 	solucionador->solucionar();
+ 	delete solucionador;
+/*
 	//pruebas
 	Tester * examinador = new Tester();
 
@@ -23,7 +30,7 @@ int main(int argc, char** argv){
 
 	examinador->veredicto();
 	delete examinador;
-
+*/
 
 	return 0;
 }
