@@ -23,7 +23,6 @@ class Grafo{
 
 		void ingresarArista(std::string v1, std::string v2, int peso);
 
-
 		bool estaVertice(std::string v);
 
 		bool sonAdyacentes(std::string v1, std::string v2);
@@ -31,6 +30,8 @@ class Grafo{
 		float pesoAdyacentes(std::string v1, std::string v2);
 
 		Lista<std::string>* obtenerVertices();
+
+		int cantidadVertices();
 	
 		Lista<std::string>* adyacentesAlVertice(std::string v);
 

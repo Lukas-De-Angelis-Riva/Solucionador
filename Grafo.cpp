@@ -90,6 +90,10 @@ Lista<str>* Grafo::obtenerVertices(){
 	return lista;
 }
 
+int Grafo::cantidadVertices(){
+	return this->vertices->cantidadElementos();
+}
+
 Lista<str>* Grafo::adyacentesAlVertice(str n){
 	Vertice* v = this->obtenerVertice(n);
 	Lista<Vertice*>* listaDeVertices = v->verticesAd();
