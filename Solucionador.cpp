@@ -27,11 +27,12 @@ void Solucionador::solucionar(){
 	//Se convierte la matriz en un grafo
 	Conversor * conversor = new Conversor(matriz, lab->obtenerAltura(), lab->obtenerAnchura());
 	Grafo * grafo = conversor->obtenerGrafo();
+	int cantidadDeVertices = grafo->cantidadVertices();
 
 	pararReloj = clock();
 	tiempo = ((double) (pararReloj - iniciarReloj)) / CLOCKS_PER_SEC;
+	cout << "Grafo creado con " << cantidadDeVertices << " de vertices..." <<endl;
 	cout << "De imagen a grafo en: " << tiempo << " Segundos..." <<endl;
-
 	//Se obtiene el inicio y el fin
 	std::string inicio = "";
 	std::string fin = "";

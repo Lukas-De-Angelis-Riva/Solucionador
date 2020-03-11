@@ -1,6 +1,7 @@
 #include "pruebas.h"
 using namespace std;
 
+
 void imprimirMatriz(int** matriz, int altura, int anchura){
 
 	for(int i = 0; i < altura; i++){
