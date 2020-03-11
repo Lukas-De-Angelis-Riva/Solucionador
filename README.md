@@ -1,5 +1,8 @@
 Solucionador de Laberintos
 =============================
+ 
+
+![Laberinto](https://github.com/Lukas-De-Angelis-Riva/Solucionador/blob/master/perfect.bmp) ![Solucion](https://github.com/Lukas-De-Angelis-Riva/Solucionador/blob/master/SOLUCIONperfect.bmp)
 
 
 Formato
