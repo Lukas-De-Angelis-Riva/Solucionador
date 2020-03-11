@@ -6,7 +6,8 @@
 #include "Conversor.h"
 #include "Seleccionador.h"
 #include "global.h"
-
+#include <time.h>
+#include <iostream>
 
 /*
  * Un Solucionador se encarga de solucionar un
