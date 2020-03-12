@@ -22,6 +22,9 @@ class Conversor {
 		int ** matriz;
 		Grafo * grafo;
 		int altura,anchura;
+		std::string entrada;
+		std::string salida;
+
 
 	public:
 
@@ -37,6 +40,18 @@ class Conversor {
 		 * Post: Devuelve el grafo
 		 */
 		Grafo * obtenerGrafo();
+
+		/*
+		 * Pre:
+		 * Post: Se ha obtenido el verticeEntrada
+		 */
+		std::string obtenerEntrada();
+
+		/*
+		 * Pre:
+		 * Post: Se ha obtenido el verticeSalida
+		 */
+		std::string obtenerSalida();
 
 		/*
 		 * Pre: Los vertices forman un camino desde la entrada

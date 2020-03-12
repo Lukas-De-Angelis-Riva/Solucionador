@@ -33,17 +33,12 @@ void Solucionador::solucionar(){
 	tiempo = ((double) (pararReloj - iniciarReloj)) / CLOCKS_PER_SEC;
 	cout << "Grafo creado con " << cantidadDeVertices << " de vertices..." <<endl;
 	cout << "De imagen a grafo en: " << tiempo << " Segundos..." <<endl;
-	//Se obtiene el inicio y el fin
-	std::string inicio = "";
-	std::string fin = "";
-	this->obtenerInicioYFin(grafo, inicio, fin);
-
 
 	cout << "Solucionando grafo..." << endl;
 	iniciarReloj = clock();
 
 	//Se selecciona el metodo y se resuelve
-	Seleccionador * seleccionador = new Seleccionador(grafo, inicio, fin);
+	Seleccionador * seleccionador = new Seleccionador(grafo, conversor->obtenerEntrada(), conversor->obtenerSalida());
 	seleccionador->resolver(this->metodo);
 
 	pararReloj = clock();
@@ -67,13 +62,6 @@ void Solucionador::solucionar(){
 }
 
 
-void Solucionador::obtenerInicioYFin(Grafo* grafo, std::string& inicio, std::string& fin){
-
-	Lista<std::string> * vertices = grafo->obtenerVertices();
-	inicio = vertices->obtener(1);
-	fin = vertices->obtener(vertices->cantidadElementos());
-	delete vertices;
-}
 
 int Solucionador::interpretarMetodo(std::string metodo){
 

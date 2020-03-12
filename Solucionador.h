@@ -46,12 +46,6 @@ class Solucionador {
 
 		/*
 		 * Pre:
-		 * Post: Obtiene el inicio y el fin del laberinto
-		 */
-		void obtenerInicioYFin(Grafo* grafo, std::string& inicio, std::string& fin);
-
-		/*
-		 * Pre:
 		 * Post: Interpreta el metodo a utilizar
 		 */
 		int interpretarMetodo(std::string metodo);

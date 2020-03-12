@@ -7,6 +7,8 @@ Conversor::Conversor(int ** &matriz, int altura, int anchura) {
 	this->altura = altura;
 	this->anchura = anchura;
 	this->grafo = new Grafo();
+	this->entrada = "";
+	this->salida = "";
 
 	this->convertirMatrizAGrafo(matriz);
 }
@@ -80,6 +82,8 @@ int Conversor::obtenerMenor(int uno, int dos){
 
 void Conversor::convertirMatrizAGrafo(int** &matriz){
 
+
+	int contador = 0;
 	for(int i = 0; i < this->altura; i++){
 		for(int j = 0; j < this->anchura; j++){
 			//cout << "i: " << i << "  j: " << j << endl;
@@ -90,12 +94,30 @@ void Conversor::convertirMatrizAGrafo(int** &matriz){
 				this->grafo->ingresarVertice(nuevoVertice);
 
 				this->conectarVertice(nuevoVertice);
+
+				if(contador == 0){
+					this->entrada = nuevoVertice;
+				}
+				this->salida = nuevoVertice;
+				contador++;
 			}
 
 		}
 	}
 
 }
+
+
+std::string Conversor::obtenerEntrada(){
+
+	return this->entrada;
+}
+
+std::string Conversor::obtenerSalida(){
+
+	return this->salida;
+}
+
 
 void Conversor::conectarVertice(std::string vertice){
 
