@@ -141,12 +141,13 @@ void Dijkstra::resolver(){
 		adyacentes->iniciarCursor();
 		while(adyacentes->avanzarCursor()){
 			NodoDij* nodoAd = adyacentes->obtenerCursor();
-			if(this->mejoraDis(nodoAd,nodoActual)){
+			if((nodoAd->getVisitado() == false) && this->mejoraDis(nodoAd,nodoActual)){
 				this->actualizarPeso(nodoAd,nodoActual);
 				this->actualizarNodoAnt(nodoAd,nodoActual);
 				actualizarHeap(heap);
 			}
 		}
+		nodoActual->setVisitadoT();
 		nodoActual = heap->obtenerElementoMinimo();
 		heap->removerMinimo();
 	}
