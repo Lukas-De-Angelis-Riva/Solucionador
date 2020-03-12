@@ -15,18 +15,12 @@ void Solucionador::solucionar(){
 	clock_t iniciarReloj, pararReloj;
 	double tiempo;
 
-	cout << "Creando laberinto de imagen a matriz..." << endl;
+	cout << "Creando laberinto de imagen a grafo..." << endl;
 	iniciarReloj = clock();
 
 	//Se crea el laberinto a partir de la imagen
 	Laberinto * lab = new Laberinto(this->laberinto);
-	int** matriz = lab->obtenerMatriz();
-
-	cout << "Creando grafo de matriz..." << endl;
-
-	//Se convierte la matriz en un grafo
-	Conversor * conversor = new Conversor(matriz, lab->obtenerAltura(), lab->obtenerAnchura());
-	Grafo * grafo = conversor->obtenerGrafo();
+	Grafo * grafo = lab->obtenerGrafo();
 	int cantidadDeVertices = grafo->cantidadVertices();
 
 	pararReloj = clock();
@@ -38,7 +32,7 @@ void Solucionador::solucionar(){
 	iniciarReloj = clock();
 
 	//Se selecciona el metodo y se resuelve
-	Seleccionador * seleccionador = new Seleccionador(grafo, conversor->obtenerEntrada(), conversor->obtenerSalida());
+	Seleccionador * seleccionador = new Seleccionador(grafo, lab->obtenerEntrada(), lab->obtenerSalida());
 	seleccionador->resolver(this->metodo);
 
 	pararReloj = clock();
@@ -49,15 +43,12 @@ void Solucionador::solucionar(){
 
 	//Se obtiene la solucion y se convierte en una imagen
 	Lista<std::string> * solucion = seleccionador->obtenerSolucion();
-	int ** matrizSolucion = conversor->obtenerSolucion(solucion);
-	lab->cambiarMatriz(matrizSolucion);
-	lab->dibujarImagen("SOLUCION" + this->laberinto);
+	lab->dibujarImagen(solucion,"SOLUCION" + this->laberinto);
 
 	cout << "Imagen solucion creada con nombre: " << ("SOLUCION" + this->laberinto) << endl;
 
 	//Liberar recursos
 	delete lab;
-	delete conversor;
 	delete seleccionador;
 }
 

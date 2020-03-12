@@ -2,16 +2,21 @@
 #define LABERINTO_H_
 
 #include <string>
+#include "../TDA/Lista.h"
+#include "../Grafo/Grafo.h"
 #include "../BMP/EasyBMP.h"
 
 #include "../global.h"
 
+const std::string ARRIBA = "Arriba";
+const std::string IZQUIERDA = "Izquierda";
+
 const int MAXIMO = 255;
-const int PASO = 50;
+const int PASO = 10;
 
 /*
  * Un Laberinto posee la imagen del laberinto que el usuario decidio cargar
- * y su representacion en una matriz
+ * y su representacion en un Grafo
  *
  */
 class Laberinto {
@@ -19,47 +24,42 @@ class Laberinto {
 	private:
 
 		BMP * imagen;
-		int ** matriz;
-		int ancho, alto;
+		Grafo * grafo;
+		std::string entrada;
+		std::string salida;
 
 	public:
 
 		/*
 		 * Pre: Existe una imagen .bmp que se encuentra en la rutaDelLaberinto
 		 * 		y que es de 16-bits
-		 * Post: Se ha creado un laberinto con su respectiva matriz
+		 * Post: Se ha creado un laberinto con su respectivo grafo
 		 */
 		Laberinto(std::string rutaDelLaberinto);
 
 		/*
 		 * Pre:
-		 * Post: Se ha cambiado la matriz del laberinto por nuevaMatriz
+		 * Post: Devuelve el grafo
 		 */
-		void cambiarMatriz(int ** &nuevaMatriz);
+		Grafo * obtenerGrafo();
 
 		/*
 		 * Pre:
-		 * Post: Se ha devuelto la matriz del laberinto
+		 * Post: Se ha obtenido el verticeEntrada
 		 */
-		int ** obtenerMatriz();
+		std::string obtenerEntrada();
 
 		/*
 		 * Pre:
-		 * Post: Devuelve la altura de la matriz
+		 * Post: Se ha obtenido el verticeSalida
 		 */
-		int obtenerAltura();
-
-		/*
-		 * Pre:
-		 * Post: Devuelve la anchura de la matriz
-		 */
-		int obtenerAnchura();
+		std::string obtenerSalida();
 
 		/*
 		 * Pre:
 		 * Post: Se ha dibujado la imagen en la rutaDelLaberintoResuelto
 		 */
-		void dibujarImagen(std::string rutaLaberintoResuelto);
+		void dibujarImagen(Lista<std::string>* solucion, std::string rutaLaberintoResuelto);
 
 		/*
 		 * Pre:
@@ -71,9 +71,9 @@ class Laberinto {
 
 		/*
 		 * Pre: Se ha guardado una imagen
-		 * Post: La matriz ha sido creada
+		 * Post: El grafo ha sido creada
 		 */
-		void convertirImagenEnMatriz();
+		void convertirImagenAGrafo();
 
 		/*
 		 * Pre:
@@ -84,9 +84,77 @@ class Laberinto {
 
 		/*
 		 * Pre:
-		 * Post: Se ha liberado la matriz guardada
+		 * Post: Devuelve true si esPasillo
 		 */
-		void liberarMatriz();
+		bool esPasillo(int alto, int ancho);
+
+		/*
+		 * Pre:
+		 * Post: Devuelve true si la celda esPasilloVertical
+		 */
+		bool esPasilloVertical(int alto, int ancho);
+
+		/*
+		 * Pre:
+		 * Post: Devuelve true si la celda esPasilloHorizontal
+		 */
+		bool esPasilloHorizontal(int alto, int ancho);
+
+		/*
+		 * Pre:
+		 * Post: Devuelve true si la celda esPared
+		 */
+		bool esPared(int alto, int ancho);
+
+		/*
+		 * Pre:
+		 * Post: Devuelve el nombre del vertice en la
+		 * 		 posicion
+		 */
+		std::string nombrar(int alto, int ancho);
+
+		/*
+		 * Pre:
+		 * Post: Conecta el vertice con sus adyacentes
+		 */
+		void conectarVertice(std::string vertice);
+
+		/*
+		 * Pre:
+		 * Post: Conecta el vertice segun la direccion
+		 */
+		void conectarAdyacenteEn(int alto, int ancho, std::string direccion, std::string vertice);
+
+		/*
+		 * Pre:
+		 * Post: Busca un vertice adyacente en la direccion
+		 */
+		std::string buscarAdyacente(int alto, int ancho, int& peso, std::string direccion);
+
+		/*
+		 * Pre:
+		 * Post: Dado dos vertices dibuja una camino
+		 */
+		void dibujarCamino(std::string anterior, std::string siguiente,
+						   int& rojo, int& verde, int& azul);
+
+		/*
+		 * Pre:
+		 * Post: Dibuja una linea Horizontal con el color adecuado
+		 */
+		void dibujarLineaHorizontal(int anchoDesde,int anchoHasta,int alto,int& rojo,int& verde,int& azul);
+
+		/*
+		 * Pre:
+		 * Post: Dibuja una linea Horizontal con el color adecuado
+		 */
+		void dibujarLineaVertical(int altoDesde,int altoHasta,int ancho,int& rojo,int& verde,int& azul);
+
+		/*
+		 * Pre:
+		 * Post: Dibuja un pixel con el color adecuado
+		 */
+		void dibujarPixel(int alto, int ancho, int& rojo, int& verde, int& azul);
 
 		/*
 		 * Pre:

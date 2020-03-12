@@ -2,18 +2,6 @@
 using namespace std;
 
 
-void imprimirMatriz(int** matriz, int altura, int anchura){
-
-	for(int i = 0; i < altura; i++){
-		for(int j = 0; j < anchura; j++){
-
-			cout << matriz[i][j];
-		}
-		cout<<""<<endl;
-	}
-
-}
-
 std::string nombre(int alto, int ancho){
 
 	char * stringC = new char[100];
@@ -29,16 +17,9 @@ bool ejemplo1(){
 	//BMP 16 - bits prueba
 	std::string laberinto = "ejemplo1.bmp";
 
-	//Se crea un laberinto con la imagen y su matriz respectiva
+	//Se crea un laberinto con la imagen y su grafo
 	Laberinto * lab = new Laberinto(laberinto);
-	int** matriz = lab->obtenerMatriz();
-
-	//Se imprime la matriz para corroborar que es correcta
-	//imprimirMatriz(matriz, lab->obtenerAltura(), lab->obtenerAnchura());
-
-	//Se crea un grafo a partir de la matriz
-	Conversor * conversor = new Conversor(matriz, lab->obtenerAltura(), lab->obtenerAnchura());
-	Grafo * grafo = conversor->obtenerGrafo();
+	Grafo * grafo = lab->obtenerGrafo();
 
 	//Se prueba que los vertices sean adyacentes con el peso correcto
 	std::string vertice02 = nombre(0, 2);
@@ -86,13 +67,10 @@ bool ejemplo1(){
 	Dijkstra * dijkstra = new Dijkstra(grafo, vertice02, vertice41);
 	dijkstra->resolver();
 	Lista<std::string> * solucion = dijkstra->getResultado();
-	int ** matrizSolucion = conversor->obtenerSolucion(solucion);
-	lab->cambiarMatriz(matrizSolucion);
-	lab->dibujarImagen("SOLUCIONejemplo1.bmp");
+	lab->dibujarImagen(solucion, "SOLUCIONejemplo1.bmp");
 
 	//Se liberan recursos
 	delete lab;
-	delete conversor;
 	delete dijkstra;
 	return resultado;
 }
@@ -102,16 +80,9 @@ bool ejemplo2(){
 	//BMP 16 - bits prueba
 	std::string laberinto = "ejemplo2.bmp";
 
-	//Se crea un laberinto con la imagen y su matriz respectiva
+	//Se crea un laberinto con la imagen y su grafo
 	Laberinto * lab = new Laberinto(laberinto);
-	int** matriz = lab->obtenerMatriz();
-
-	//Se imprime la matriz para corroborar que es correcta
-	//imprimirMatriz(matriz, lab->obtenerAltura(), lab->obtenerAnchura());
-
-	//Se crea un grafo a partir de la matriz
-	Conversor * conversor = new Conversor(matriz, lab->obtenerAltura(), lab->obtenerAnchura());
-	Grafo * grafo = conversor->obtenerGrafo();
+	Grafo * grafo = lab->obtenerGrafo();
 
 	//Se prueba que los vertices sean adyacentes con el peso correcto
 	std::string vertice02 = nombre(0, 2);
@@ -144,14 +115,10 @@ bool ejemplo2(){
 	Dijkstra * dijkstra = new Dijkstra(grafo, vertice02, vertice43);
 	dijkstra->resolver();
 	Lista<std::string> * solucion = dijkstra->getResultado();
-	int ** matrizSolucion = conversor->obtenerSolucion(solucion);
-	lab->cambiarMatriz(matrizSolucion);
-
-	lab->dibujarImagen("SOLUCIONejemplo2.bmp");
+	lab->dibujarImagen(solucion,"SOLUCIONejemplo2.bmp");
 
 	//Se liberan recursos
 	delete lab;
-	delete conversor;
 	delete dijkstra;
 	return resultado;
 }
@@ -162,16 +129,10 @@ bool ejemplo3(){
 	//BMP 16 - bits prueba
 	std::string laberinto = "ejemplo3.bmp";
 
-	//Se crea un laberinto con la imagen y su matriz respectiva
+	//Se crea un laberinto con la imagen y su grafo
 	Laberinto * lab = new Laberinto(laberinto);
-	int** matriz = lab->obtenerMatriz();
+	Grafo * grafo = lab->obtenerGrafo();
 
-	//Se imprime la matriz para corroborar que es correcta
-	//imprimirMatriz(matriz, lab->obtenerAltura(), lab->obtenerAnchura());
-
-	//Se crea un grafo a partir de la matriz
-	Conversor * conversor = new Conversor(matriz, lab->obtenerAltura(), lab->obtenerAnchura());
-	Grafo * grafo = conversor->obtenerGrafo();
 
 	//Se prueba que los vertices sean adyacentes con el peso correcto
 	std::string vertice03 = nombre(0, 3);
@@ -201,14 +162,11 @@ bool ejemplo3(){
 	Dijkstra * dijkstra = new Dijkstra(grafo, vertice03, vertice42);
 	dijkstra->resolver();
 	Lista<std::string> * solucion = dijkstra->getResultado();
-	int ** matrizSolucion = conversor->obtenerSolucion(solucion);
-	lab->cambiarMatriz(matrizSolucion);
-	lab->dibujarImagen("SOLUCIONejemplo3.bmp");
+	lab->dibujarImagen(solucion, "SOLUCIONejemplo3.bmp");
 
 
 	//Se liberan recursos
 	delete lab;
-	delete conversor;
 	delete dijkstra;
 	return resultado;
 }
@@ -219,16 +177,10 @@ bool ejemplo4(){
 	//BMP 16 - bits prueba
 	std::string laberinto = "ejemplo4.bmp";
 
-	//Se crea un laberinto con la imagen y su matriz respectiva
+	//Se crea un laberinto con la imagen y su grafo
 	Laberinto * lab = new Laberinto(laberinto);
-	int** matriz = lab->obtenerMatriz();
+	Grafo * grafo = lab->obtenerGrafo();
 
-	//Se imprime la matriz para corroborar que es correcta
-	//imprimirMatriz(matriz, lab->obtenerAltura(), lab->obtenerAnchura());
-
-	//Se crea un grafo a partir de la matriz
-	Conversor * conversor = new Conversor(matriz, lab->obtenerAltura(), lab->obtenerAnchura());
-	Grafo * grafo = conversor->obtenerGrafo();
 
 	//Se prueba que los vertices sean adyacentes con el peso correcto
 	std::string vertice03 = nombre(0, 3);
@@ -303,13 +255,10 @@ bool ejemplo4(){
 	Dijkstra * dijkstra = new Dijkstra(grafo, vertice03, vertice97);
 	dijkstra->resolver();
 	Lista<std::string> * solucion = dijkstra->getResultado();
-	int ** matrizSolucion = conversor->obtenerSolucion(solucion);
-	lab->cambiarMatriz(matrizSolucion);
-	lab->dibujarImagen("SOLUCIONejemplo4.bmp");
+	lab->dibujarImagen(solucion,"SOLUCIONejemplo4.bmp");
 
 	//Se liberan recursos
 	delete lab;
-	delete conversor;
 	delete dijkstra;
 	return resultado;
 }
@@ -319,16 +268,10 @@ bool ejemplo5(){
 	//BMP 16 - bits prueba
 	std::string laberinto = "ejemplo5.bmp";
 
-	//Se crea un laberinto con la imagen y su matriz respectiva
+	//Se crea un laberinto con la imagen y su grafo
 	Laberinto * lab = new Laberinto(laberinto);
-	int** matriz = lab->obtenerMatriz();
+	Grafo * grafo = lab->obtenerGrafo();
 
-	//Se imprime la matriz para corroborar que es correcta
-	//imprimirMatriz(matriz, lab->obtenerAltura(), lab->obtenerAnchura());
-
-	//Se crea un grafo a partir de la matriz
-	Conversor * conversor = new Conversor(matriz, lab->obtenerAltura(), lab->obtenerAnchura());
-	Grafo * grafo = conversor->obtenerGrafo();
 
 	//Se prueba que los vertices sean adyacentes con el peso correcto
 	std::string vertice08 = nombre(0, 8);
@@ -407,13 +350,10 @@ bool ejemplo5(){
 	Dijkstra * dijkstra = new Dijkstra(grafo, vertice08, vertice92);
 	dijkstra->resolver();
 	Lista<std::string> * solucion = dijkstra->getResultado();
-	int ** matrizSolucion = conversor->obtenerSolucion(solucion);
-	lab->cambiarMatriz(matrizSolucion);
-	lab->dibujarImagen("SOLUCIONejemplo5.bmp");
+	lab->dibujarImagen(solucion,"SOLUCIONejemplo5.bmp");
 
 	//Se liberan recursos
 	delete lab;
-	delete conversor;
 	delete dijkstra;
 	return resultado;
 }

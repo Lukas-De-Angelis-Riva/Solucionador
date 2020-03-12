@@ -1,6 +1,5 @@
 #include <iostream>
 #include "./Laberinto/Laberinto.h"
-#include "./Conversor/Conversor.h"
 #include "Pruebas/pruebas.h"
 #include "Pruebas/Tester.h"
 #include "./Solucionador/Solucionador.h"
@@ -18,6 +17,7 @@ int main(int argc, char** argv){
  	Solucionador * solucionador = new Solucionador(metodo, laberinto);
  	solucionador->solucionar();
  	delete solucionador;
+
 /*
 	//pruebas
 	Tester * examinador = new Tester();
