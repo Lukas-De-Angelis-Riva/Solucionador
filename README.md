@@ -3,7 +3,7 @@ Solucionador de Laberintos
  
 
 
- ![Laberinto](https://github.com/Lukas-De-Angelis-Riva/Solucionador/blob/master/Laberintote.bmp) :|: ![Solucion](https://github.com/Lukas-De-Angelis-Riva/Solucionador/blob/master/SOLUCIONLaberintote.bmp) 
+ ![Laberinto](https://github.com/Lukas-De-Angelis-Riva/Solucionador/blob/master/Laberintote.bmp) | ![Solucion](https://github.com/Lukas-De-Angelis-Riva/Solucionador/blob/master/SOLUCIONLaberintote.bmp) 
 :-------------------------:|:-------------------------:
 Input           |  Output
 
