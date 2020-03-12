@@ -1,6 +1,6 @@
 #include "Dijkstra.h"
-#include "../IteradorLista.h"
-#include "../Pila.h"
+#include "../TDA/IteradorLista.h"
+#include "../TDA/Pila.h"
 #define str std::string
 #define ERRORDIJ -1
 

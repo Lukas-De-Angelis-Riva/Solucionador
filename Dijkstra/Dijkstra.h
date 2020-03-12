@@ -1,8 +1,8 @@
 #ifndef DIJKSTRA_H_
 #define DIJKSTRA_H_
 
-#include "../Grafo.h"
-#include "../Lista.h"
+#include "../Grafo/Grafo.h"
+#include "../TDA/Lista.h"
 #include "../global.h"
 class Dijkstra {
 

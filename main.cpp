@@ -1,9 +1,9 @@
 #include <iostream>
-#include "Laberinto.h"
-#include "Conversor.h"
+#include "./Laberinto/Laberinto.h"
+#include "./Conversor/Conversor.h"
 #include "Pruebas/pruebas.h"
 #include "Pruebas/Tester.h"
-#include "Solucionador.h"
+#include "./Solucionador/Solucionador.h"
 using namespace std;
 
 
@@ -14,7 +14,7 @@ int main(int argc, char** argv){
 	//std::string laberinto = argv[2];
 
 	std::string metodo = "Dijkstra";
-	std::string laberinto = "perfect65x33.bmp";
+	std::string laberinto = "perfect65x65.bmp";
  	Solucionador * solucionador = new Solucionador(metodo, laberinto);
  	solucionador->solucionar();
  	delete solucionador;

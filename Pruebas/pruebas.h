@@ -1,8 +1,8 @@
 #ifndef PRUEBAS_H_
 #define PRUEBAS_H_
 
-#include "../Laberinto.h"
-#include "../Conversor.h"
+#include "../Laberinto/Laberinto.h"
+#include "../Conversor/Conversor.h"
 #include "../Dijkstra/Dijkstra.h"
 #include <iostream>
 
