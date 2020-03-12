@@ -19,7 +19,7 @@ Recibe una imagen BMP de 16 bits que representa el laberinto, este cumple las si
 Métodos de resolución
 ---------------------
 
-El programa permite resolver el laberinto utilizando los siguientes metodos:
+El programa permite resolver el laberinto utilizando los siguientes métodos:
 * Dijkstra
 * Depth First Search [WIP]
 * Breadth First Search [WIP]
@@ -31,4 +31,4 @@ Compilación y Ejecución
 
 Compilar con Eclipse IDE en una carpeta source y ejecutar con el siguiente comando:
 
-`./SolucionadorDeLaberintos "Metodo" "Laberinto.bmp"`
+`./SolucionadorDeLaberintos "Método" "Laberinto.bmp"`
