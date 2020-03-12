@@ -5,7 +5,6 @@
 #include <time.h>
 #include <iostream>
 #include "../Laberinto/Laberinto.h"
-#include "../Conversor/Conversor.h"
 #include "../Seleccionador/Seleccionador.h"
 #include "../global.h"
 

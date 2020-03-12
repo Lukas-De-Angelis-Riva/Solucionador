@@ -5,60 +5,247 @@ using namespace std;
 
 Laberinto::Laberinto(std::string rutaDelLaberinto){
 
+	this->grafo = new Grafo;
 	this->imagen = new BMP;
 	this->imagen->ReadFromFile(rutaDelLaberinto.c_str());
-	this->matriz = NULL;
-	this->ancho = this->imagen->TellWidth();
-	this->alto = this->imagen->TellHeight();
+	this->entrada = "";
+	this->salida = "";
 
-	this->convertirImagenEnMatriz();
+	this->convertirImagenAGrafo();
 }
 
-void Laberinto::cambiarMatriz(int **&nuevaMatriz){
+
+Grafo * Laberinto::obtenerGrafo(){
+
+	return this->grafo;
+}
+
+std::string Laberinto::obtenerEntrada(){
+
+	return this->entrada;
+}
+
+std::string Laberinto::obtenerSalida(){
+
+	return this->salida;
+}
+
+//Crear Grafo
+
+void Laberinto::convertirImagenAGrafo(){
+
+	int contador = 0;
+	int alto = this->imagen->TellHeight();
+	int ancho = this->imagen->TellWidth();
+
+	for(int i = 0; i < alto; i++){
+		for(int j = 0; j < ancho; j++){
+			if(!this->esPared(i, j) && !this->esPasillo(i, j)){
+
+				std::string nuevoVertice = this->nombrar(i, j);
+				this->grafo->ingresarVertice(nuevoVertice);
+
+				this->conectarVertice(nuevoVertice);
+
+				if(contador == 0){
+					this->entrada = nuevoVertice;
+				}
+				this->salida = nuevoVertice;
+				contador++;
+			}
+
+		}
+	}
+}
 
 
-	this->matriz = nuevaMatriz;
+void Laberinto::conectarVertice(std::string vertice){
+
+	int alto = 0;
+	int ancho = 0;
+	sscanf(vertice.c_str(), "%i;%i", &alto, &ancho);
+
+	if(alto - 1 >= 0){
+
+		this->conectarAdyacenteEn(alto - 1, ancho , ARRIBA, vertice);
+	}
+
+	this->conectarAdyacenteEn(alto, ancho - 1, IZQUIERDA, vertice);
 
 }
 
-int ** Laberinto::obtenerMatriz(){
+void Laberinto::conectarAdyacenteEn(int alto, int ancho, std::string direccion, std::string vertice){
 
-	return this->matriz;
+	if(this->esPasillo(alto, ancho)){
+
+		int peso = 0;
+		std::string verticeAdyacente = this->buscarAdyacente(alto, ancho, peso, direccion);
+		this->grafo->ingresarArista(vertice, verticeAdyacente, peso);
+	}else if(!this->esPared(alto, ancho)){
+
+		int peso = 1;
+		std::string verticeAdyacente = this->nombrar(alto, ancho);
+		this->grafo->ingresarArista(vertice, verticeAdyacente, peso);
+	}
+
 }
 
-int Laberinto::obtenerAltura(){
+std::string Laberinto::buscarAdyacente(int alto, int ancho, int& peso, std::string direccion){
 
-	return this->alto;
+	peso++;
+	if(!this->esPasillo(alto, ancho) && !this->esPared(alto, ancho)){
+
+		return this->nombrar(alto, ancho);
+	}else if(direccion == ARRIBA){
+
+		return this->buscarAdyacente(alto - 1, ancho, peso, ARRIBA);
+	}else{
+
+		return this->buscarAdyacente(alto, ancho - 1, peso, IZQUIERDA);
+	}
+
 }
 
-int Laberinto::obtenerAnchura(){
+bool Laberinto::esPasillo(int alto, int ancho){
 
-	return this->ancho;
+	int altura = this->imagen->TellHeight();
+
+	if(this->esPared(alto, ancho) ||
+	   alto == 0 || alto == altura - 1){
+
+		return false;
+	}
+	return (this->esPasilloVertical(alto, ancho) ||
+			this->esPasilloHorizontal(alto, ancho));
 }
 
-void Laberinto::dibujarImagen(std::string rutaLaberintoResuelto){
+bool Laberinto::esPasilloVertical(int alto, int ancho){
+
+	return (!this->esPared(alto - 1, ancho) &&
+			!this->esPared(alto + 1, ancho) &&
+			 this->esPared(alto, ancho - 1) &&
+			 this->esPared(alto, ancho + 1));
+
+}
+
+bool Laberinto::esPasilloHorizontal(int alto, int ancho){
+
+	return ( this->esPared(alto - 1, ancho) &&
+			 this->esPared(alto + 1, ancho) &&
+			!this->esPared(alto, ancho - 1) &&
+			!this->esPared(alto, ancho + 1));
+
+
+}
+
+bool Laberinto::esPared(int alto, int ancho){
+
+	return this->esNegro(alto, ancho);
+}
+
+std::string Laberinto::nombrar(int alto, int ancho){
+
+	char * stringC = new char[100];
+	sprintf(stringC, "%d;%d", alto, ancho);
+	std::string nombre(stringC);
+	delete []stringC;
+	return nombre;
+}
+
+//Dibujar
+
+
+
+void Laberinto::dibujarImagen(Lista<std::string>* solucion, std::string rutaLaberintoResuelto){
 
 	int rojo = MAXIMO;
 	int verde = 0;
 	int azul = 0;
 
-	for(int i = 0; i < this->alto; i++){
-		for(int j = 0; j < this->ancho; j++){
-			if(this->matriz[i][j] == VALOR_RUTA){
 
-				this->obtenerColor(rojo, verde, azul);
-				(*this->imagen)(j, i)->Red = rojo;
-				(*this->imagen)(j, i)->Green = verde;
-				(*this->imagen)(j, i)->Blue = azul;
-				(*this->imagen)(j, i)->Alpha = 0;
-
-
-			}
-		}
+	if(solucion->estaVacia()){
+		throw std::string("No hay solucion");
 	}
+	std::string verticeAnterior = solucion->obtener(1);
+
+	solucion->iniciarCursor();
+	while(solucion->avanzarCursor()){
+		std::string verticeSiguiente = solucion->obtenerCursor();
+
+		this->dibujarCamino(verticeAnterior, verticeSiguiente, rojo, verde, azul);
+		verticeAnterior = verticeSiguiente;
+	}
+
 	this->imagen->WriteToFile(rutaLaberintoResuelto.c_str());
 }
 
+
+void Laberinto::dibujarCamino(std::string anterior, std::string siguiente,
+				   	   	   	  int& rojo, int& verde, int& azul){
+
+	int altoDesde = 0;
+	int anchoDesde = 0;
+	sscanf(anterior.c_str(), "%i;%i", &altoDesde, &anchoDesde);
+
+	int altoHasta = 0;
+	int anchoHasta = 0;
+	sscanf(siguiente.c_str(), "%i;%i", &altoHasta, &anchoHasta);
+
+	if(altoDesde == altoHasta){
+
+		this->dibujarLineaHorizontal(anchoDesde, anchoHasta, altoDesde, rojo, verde, azul);
+	}else{
+
+		this->dibujarLineaVertical(altoDesde, altoHasta, anchoDesde, rojo, verde, azul);
+	}
+
+}
+
+void Laberinto::dibujarLineaHorizontal(int anchoDesde,int anchoHasta,int alto,int& rojo,int& verde,int& azul){
+
+	if(anchoDesde < anchoHasta){
+
+		for(int i = anchoDesde; i <= anchoHasta; i++){
+
+			this->dibujarPixel(alto, i, rojo, verde, azul);
+		}
+	}else{
+
+		for(int i = anchoDesde; i >= anchoHasta; i--){
+
+			this->dibujarPixel(alto, i, rojo, verde, azul);
+		}
+	}
+}
+
+
+void Laberinto::dibujarLineaVertical(int altoDesde,int altoHasta,int ancho,int& rojo,int& verde,int& azul){
+
+
+	if(altoDesde < altoHasta){
+
+		for(int i = altoDesde; i <= altoHasta; i++){
+
+			this->dibujarPixel(i, ancho, rojo, verde, azul);
+		}
+	}else{
+
+		for(int i = altoDesde; i >= altoHasta; i--){
+
+			this->dibujarPixel(i, ancho, rojo, verde, azul);
+		}
+	}
+}
+
+void Laberinto::dibujarPixel(int alto, int ancho, int& rojo, int& verde, int& azul){
+
+	this->obtenerColor(rojo, verde, azul);
+	(*this->imagen)(ancho, alto)->Red = rojo;
+	(*this->imagen)(ancho, alto)->Green = verde;
+	(*this->imagen)(ancho, alto)->Blue = azul;
+	(*this->imagen)(ancho, alto)->Alpha = 0;
+
+}
 
 void Laberinto::obtenerColor(int& rojo, int& verde, int& azul){
 
@@ -99,28 +286,6 @@ void Laberinto::chequearColor(int& color){
 	}
 }
 
-void Laberinto::convertirImagenEnMatriz(){
-
-	this->matriz = new int * [alto];
-	for(int i = 0; i < alto; i++){
-
-		this->matriz[i] = new int[ancho];
-	}
-
-	for(int i = 0; i < alto; i++){
-		for(int j = 0; j < ancho; j++){
-
-			if(this->esNegro(i, j)){
-
-				this->matriz[i][j] = VALOR_PARED;
-			}else{
-
-				this->matriz[i][j] = VALOR_PASILLO;
-			}
-		}
-	}
-}
-
 
 bool Laberinto::esNegro(int alto, int ancho){
 
@@ -139,15 +304,7 @@ bool Laberinto::esNegro(int alto, int ancho){
 Laberinto::~Laberinto(){
 
 	delete this->imagen;
-	this->liberarMatriz();
+	delete this->grafo;
 }
 
-void Laberinto::liberarMatriz(){
 
-	for(int i = 0; i < this->alto; i++){
-		delete[] this->matriz[i];
-	}
-	delete[] this->matriz;
-	this->matriz = NULL;
-
-}

@@ -2,7 +2,6 @@
 #define PRUEBAS_H_
 
 #include "../Laberinto/Laberinto.h"
-#include "../Conversor/Conversor.h"
 #include "../Dijkstra/Dijkstra.h"
 #include <iostream>
 
