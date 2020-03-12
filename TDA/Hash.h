@@ -59,6 +59,12 @@ template <class T> class Hash{
 		T buscar(std::string clave);
 
 		/*
+		 * Pre: El elemento esta en el hash
+		 * Post: Se ha cambiado el elemento
+		 */
+		void cambiarElemento(std::string clave, T nuevoElemento);
+
+		/*
 		 * Pre:
 		 * Post: Devuelve la cantidad de elementos presentes en el hash
 		 */
@@ -165,6 +171,23 @@ T Hash<T>::buscar(std::string clave){
 
 	delete datoSimilar;
 	return encontrado->obtenerValor();
+
+}
+
+template <class T>
+void Hash<T>::cambiarElemento(std::string clave, T nuevoElemento){
+
+	unsigned int posicion = this->funcionHash(clave);
+	ABB<NodoHash<T> * > * lugarDeLaTabla = this->tabla[posicion];
+	NodoHash<T> * datoSimilar = new NodoHash<T>(clave, VALOR_CUALQUIERA);
+
+	if(lugarDeLaTabla == NULL)
+		throw std::string("No esta el elemento al buscarlo");
+
+	NodoHash<T> * encontrado = lugarDeLaTabla->buscar(datoSimilar);
+
+	delete datoSimilar;
+	encontrado->cambiarValor(nuevoElemento);
 
 }
 
