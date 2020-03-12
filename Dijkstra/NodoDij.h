@@ -21,6 +21,10 @@ class NodoDij{
 
 		void setVisitado();
 
+		void setNodoAnt(NodoDij* nodo);
+
+		bool operator< (const NodoDij& derecha);
+
 	private:
 		std::string nombre;
 		float distancia;
