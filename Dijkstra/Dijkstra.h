@@ -41,7 +41,7 @@ class Dijkstra{
 
 		Hash<NodoDij*>* crearHashClave_nodoDij();
 
-		Heap<NodoDij*>* crearHeapCandidatos(Hash<NodoDij*>* hash);
+		Heap* crearHeapCandidatos(Hash<NodoDij*>* hash);
 
 		Lista<NodoDij*>* obtenerNodosAdyacentes(Hash<NodoDij*>* hash, NodoDij* nodoActual);
 

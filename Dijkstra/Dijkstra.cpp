@@ -5,6 +5,9 @@
 #define ERRORDIJ -1
 
 
+#include <iostream>
+using namespace std;
+
 /*Crea la estructura de Dijkstra. vInicio será el vértice partida y vFin el vértice llegada.*/
 Dijkstra::Dijkstra(Grafo* g, str vIni, str vFin){
 	if(g->estaVertice(vIni) && g->estaVertice(vFin)){
@@ -63,16 +66,16 @@ Hash<NodoDij*>* Dijkstra::crearHashClave_nodoDij(){
 											this->grafo->pesoAdyacentes(verticeActual,this->partida));
 			hash->agregar(verticeActual,nodo);
 		}
-	}	
+	}
+	return hash;
 }
 
 /* Crea e inicializa el heap de candidatos,
 	poseera de clave a la distancia al vértice partida y el elemento un puntero al NodoDij almacenado en el hash. */
-Heap<NodoDij*>* Dijkstra::crearHeapCandidatos(Hash<NodoDij*>* hash){
-	Heap<NodoDij*>* heap = new Heap<NodoDij*>;
-	Lista<NodoDij*>* vertices;
+Heap* Dijkstra::crearHeapCandidatos(Hash<NodoDij*>* hash){
+	Heap* heap = new Heap;
+	Lista<NodoDij*>* vertices = new Lista<NodoDij*>;
 	hash->recorrer(vertices);
-
 	vertices->iniciarCursor();
 	while(vertices->avanzarCursor()){
 		NodoDij* nodoActual = vertices->obtenerCursor();
@@ -80,6 +83,7 @@ Heap<NodoDij*>* Dijkstra::crearHeapCandidatos(Hash<NodoDij*>* hash){
 			heap->insertar(nodoActual->getDistancia(),nodoActual);
 		}
 	}
+	return heap;
 }
 
 /* Recibe un nodo y devuelve una lista de los nodos que contienen a sus vértices adyacentes */
@@ -112,10 +116,6 @@ void Dijkstra::actualizarNodoAnt(NodoDij* llegada, NodoDij* salida){
 	return;
 }
 
-void actualizarHeap(Heap<NodoDij*>* heap){
-	//falta hacer.
-}
-
 /*Libera la memoria reservada por el método 'crearHashClave_nodoDij()'.*/
 void liberarMemoriaHash(Hash<NodoDij*>* hash){
 	Lista<NodoDij*>* lista = new Lista<NodoDij*>;
@@ -132,8 +132,7 @@ void liberarMemoriaHash(Hash<NodoDij*>* hash){
 */
 void Dijkstra::resolver(){
 	Hash<NodoDij*>* hash = this->crearHashClave_nodoDij();
-	Heap<NodoDij*>* heap = this->crearHeapCandidatos(hash);
-
+	Heap* heap = this->crearHeapCandidatos(hash);
 	NodoDij* nodoActual = heap->obtenerElementoMinimo();
 	heap->removerMinimo();
 	while(nodoActual->getNombre() != this->llegada){
@@ -144,7 +143,7 @@ void Dijkstra::resolver(){
 			if((nodoAd->getVisitado() == false) && this->mejoraDis(nodoAd,nodoActual)){
 				this->actualizarPeso(nodoAd,nodoActual);
 				this->actualizarNodoAnt(nodoAd,nodoActual);
-				actualizarHeap(heap);
+				heap->disminuirClave(nodoAd,nodoAd->getDistancia());
 			}
 		}
 		nodoActual->setVisitadoT();
@@ -152,7 +151,6 @@ void Dijkstra::resolver(){
 		heap->removerMinimo();
 	}
 	this->resultado = armarResultado(nodoActual); //actual en este caso ya es la llegada.
-
 	delete heap;
 	liberarMemoriaHash(hash);
 	delete hash;
