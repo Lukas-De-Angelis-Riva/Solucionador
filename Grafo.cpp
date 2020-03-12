@@ -10,16 +10,19 @@
 
 /* Crea un grafo vacio,*/
 Grafo::Grafo(){
-	this->vertices = new Lista<Vertice*>;
+	this->vertices = new Hash<Vertice*>;
 }
 
 
 /*Elimina el grafo, y toda la memoria que se ha utlizado internamiente*/
 Grafo::~Grafo(){
-	this->vertices->iniciarCursor();
-	while(this->vertices->avanzarCursor()){
-		delete this->vertices->obtenerCursor();
+	Lista<Vertice*>* lista = new Lista<Vertice*>;
+	this->vertices->recorrer(lista);
+	lista->iniciarCursor();
+	while(lista->avanzarCursor()){
+		delete lista->obtenerCursor();
 	}
+	delete lista;
 	delete this->vertices;
 }
 
@@ -29,7 +32,7 @@ Grafo::~Grafo(){
 */
 void Grafo::ingresarVertice(str nombre){
 	Vertice* vertice = new Vertice(nombre);
-	this->vertices->agregar(vertice);
+	this->vertices->agregar(nombre,vertice);
 }
 
 
@@ -37,14 +40,8 @@ void Grafo::ingresarVertice(str nombre){
 	En caso de no existir lanza un throw avisando que no existe el vértice en el grafo.
 */
 Vertice* Grafo::obtenerVertice(str nombre){
-	this->vertices->iniciarCursor();
-	while(this->vertices->avanzarCursor()){
-		Vertice* verticeActual = this->vertices->obtenerCursor(); 
-		if(verticeActual->getNombre() == nombre){
-			return verticeActual;
-		}
-	}
-	throw str ("No existe dicho vertice");
+	Vertice* v = this->vertices->buscar(nombre);
+	return v;
 }
 
 /*Ingresa una arista entre dos vértices.
@@ -77,14 +74,7 @@ void Grafo::ingresarArista(str n1, str n2, int peso){
 /*Devuelve true si el vértice pertenece al grafol.
 */
 bool Grafo::estaVertice(str n){
-	Vertice* v = this->obtenerVertice(n);
-	this->vertices->iniciarCursor();
-	while(this->vertices->avanzarCursor()){
-		if(this->vertices->obtenerCursor() == v){
-			return true;
-		}
-	}
-	return false;
+	return this->vertices->esta(n);
 }
 
 
@@ -112,13 +102,12 @@ bool Grafo::sonAdyacentes(str n1, str n2){
 	En caso de ser dos vértices no adyacentes, se devolverá la constante INFINITY de la biblioteca math.h.
 */
 float Grafo::pesoAdyacentes(str n1, str n2){
-	Vertice* v1 = this->obtenerVertice(n1);
-	Vertice* v2 = this->obtenerVertice(n2);
-	
-	if(v1 == v2){
+	if(n1 == n2){
 		return 0;
 	}
-	
+	Vertice* v1 = this->obtenerVertice(n1);
+	Vertice* v2 = this->obtenerVertice(n2);
+
 	if(this->sonAdyacentes(n1,n2)){
 		if(v1->pesoVerticeAd(v2) == v2->pesoVerticeAd(v1)){
 			return v1->pesoVerticeAd(v2);
@@ -132,17 +121,19 @@ float Grafo::pesoAdyacentes(str n1, str n2){
 }
 
 Lista<str>* Grafo::obtenerVertices(){
-	Lista<str>* lista = new Lista<str>;
-	this->vertices->iniciarCursor();
-	while(this->vertices->avanzarCursor()){
-		lista->agregar(this->vertices->obtenerCursor()->getNombre());
+	Lista<str>* listaStr = new Lista<str>;
+	Lista<Vertice*>* lista = new Lista<Vertice*>;
+	this->vertices->recorrer(lista);
+	lista->iniciarCursor();
+	while(lista->avanzarCursor()){
+		listaStr->agregar(lista->obtenerCursor()->getNombre());
 	}
-	return lista;
+	return listaStr;
 }
 
 /*Devuelve una Lista de strings representando los nombres de los vértices que pertenecen al grafo. */
 int Grafo::cantidadVertices(){
-	return this->vertices->cantidadElementos();
+	return this->vertices->obtenerTamanio();
 }
 
 /*Devuelve la cantidad de vértices que posee el grafo.*/

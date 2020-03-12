@@ -5,7 +5,7 @@
 #include <math.h>
 #include "Vertice.h"
 #include "Lista.h"
-
+#include "Hash.h"
 
 
 /*
@@ -19,7 +19,7 @@
 class Grafo{
 	private:
 
-		Lista<Vertice*>* vertices;
+		Hash<Vertice*>* vertices;
 
 		Vertice* obtenerVertice(std::string nombre);
 
