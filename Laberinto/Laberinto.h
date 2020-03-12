@@ -12,7 +12,7 @@ const std::string ARRIBA = "Arriba";
 const std::string IZQUIERDA = "Izquierda";
 
 const int MAXIMO = 255;
-const int PASO = 10;
+const int PASO = 1;
 
 /*
  * Un Laberinto posee la imagen del laberinto que el usuario decidio cargar
