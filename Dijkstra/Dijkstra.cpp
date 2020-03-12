@@ -66,7 +66,8 @@ Hash<NodoDij*>* Dijkstra::crearHashClave_nodoDij(){
 	}	
 }
 
-/* Crea e inicializa el heap de candidatos, poseera la clave la distancia al vértice partida y el elemento un puntero al NodoDij almacenado en el hash. */
+/* Crea e inicializa el heap de candidatos,
+	poseera de clave a la distancia al vértice partida y el elemento un puntero al NodoDij almacenado en el hash. */
 Heap<NodoDij*>* Dijkstra::crearHeapCandidatos(Hash<NodoDij*>* hash){
 	Heap<NodoDij*>* heap = new Heap<NodoDij*>;
 	Lista<NodoDij*>* vertices;
@@ -80,6 +81,8 @@ Heap<NodoDij*>* Dijkstra::crearHeapCandidatos(Hash<NodoDij*>* hash){
 		}
 	}
 }
+
+/* Recibe un nodo y devuelve una lista de los nodos que contienen a sus vértices adyacentes */
 Lista<NodoDij*>* Dijkstra::obtenerNodosAdyacentes(Hash<NodoDij*>* hash, NodoDij* nodoActual){
 	Lista<str>* adyacentes = this->grafo->adyacentesAlVertice(nodoActual->getNombre());
 	Lista<NodoDij*>* nodosAdyacentes = new Lista<NodoDij*>;
@@ -89,12 +92,23 @@ Lista<NodoDij*>* Dijkstra::obtenerNodosAdyacentes(Hash<NodoDij*>* hash, NodoDij*
 	}
 	return nodosAdyacentes;
 }
+/* Devuelve true en caso de que la distancia actual sea mayor que la distancia para ir hasta partida y de partida a actual.
+	En caso contrario devuelve false.
+*/
+
 bool Dijkstra::mejoraDis(NodoDij* llegada, NodoDij* salida){
 	return llegada->getDistancia() > 
 					salida->getDistancia() + this->grafo->pesoAdyacentes(llegada->getNombre(),salida->getNombre());
 }
+/*Actualiza el peso del nodo llegada.*/
 void Dijkstra::actualizarPeso(NodoDij* llegada, NodoDij* salida){
 	llegada->setDistancia(salida->getDistancia() + this->grafo->pesoAdyacentes(llegada->getNombre(),salida->getNombre()));
+	return;
+}
+
+/*Actualiza el nodo anterior del nodo llegada, lo suplanda por el nodo salida.*/
+void Dijkstra::actualizarNodoAnt(NodoDij* llegada, NodoDij* salida){
+	llegada->setNodoAnt(salida);
 	return;
 }
 
@@ -102,6 +116,7 @@ void actualizarHeap(Heap<NodoDij*>* heap){
 	//falta hacer.
 }
 
+/*Libera la memoria reservada por el método 'crearHashClave_nodoDij()'.*/
 void liberarMemoriaHash(Hash<NodoDij*>* hash){
 	Lista<NodoDij*>* lista = new Lista<NodoDij*>;
 	hash->recorrer(lista);
@@ -111,6 +126,10 @@ void liberarMemoriaHash(Hash<NodoDij*>* hash){
 	}
 	delete lista;
 }
+
+/* Resuelve el problema y lo guarda en resultado.
+	Precondición: se llamará solo una vez al método.
+*/
 void Dijkstra::resolver(){
 	Hash<NodoDij*>* hash = this->crearHashClave_nodoDij();
 	Heap<NodoDij*>* heap = this->crearHeapCandidatos(hash);
@@ -122,9 +141,9 @@ void Dijkstra::resolver(){
 		adyacentes->iniciarCursor();
 		while(adyacentes->avanzarCursor()){
 			NodoDij* nodoAd = adyacentes->obtenerCursor();
-			//falta hacer el heap->esta.
-			if(/*heap->esta(nodoAd) && */this->mejoraDis(nodoAd,nodoActual)){
-				actualizarPeso(nodoAd,nodoActual);
+			if(this->mejoraDis(nodoAd,nodoActual)){
+				this->actualizarPeso(nodoAd,nodoActual);
+				this->actualizarNodoAnt(nodoAd,nodoActual);
 				actualizarHeap(heap);
 			}
 		}
@@ -138,6 +157,8 @@ void Dijkstra::resolver(){
 	delete hash;
 }
 
+
+/*Devuelve el resultado. Primero se debe llamar a resolver, de lo contrario resultado estará vacio.*/
 Lista<str>* Dijkstra::getResultado(){
 	return this->resultado;
 }

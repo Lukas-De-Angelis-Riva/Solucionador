@@ -20,7 +20,7 @@ class Dijkstra{
 		/*Elimina a Dijkstra y libera toda la memoria reservada por la clase.*/
 		~Dijkstra();
 		
-		/*Resuelve el problema y lo guarda en resultado.
+		/* Resuelve el problema y lo guarda en resultado.
 			Precondición: se llamará solo una vez al método.
 		*/
 		void resolver();
@@ -48,6 +48,8 @@ class Dijkstra{
 		bool mejoraDis(NodoDij* n1, NodoDij* n2);
 
 		void actualizarPeso(NodoDij* llegada, NodoDij* salida);
+
+		void actualizarNodoAnt(NodoDij* llegada, NodoDij* salida);
 
 };
 #endif /* DIJKSTRA_H_ */
