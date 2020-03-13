@@ -12,6 +12,8 @@ bool esLaberintoValido(std::string rutaLaberinto){
 	bool pudoAbrir = (fp != NULL);
 	if(!pudoAbrir){
 		cout << "No existe el laberinto: " << rutaLaberinto << endl;
+	}else{
+		fclose(fp);
 	}
 	return pudoAbrir;
 }
