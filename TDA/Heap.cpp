@@ -186,11 +186,10 @@ void Heap::propagarParaAbajo(unsigned int indice){
 	NodoHeap<NodoDij*> * hijoIzquierdo = this->heap[(2 * indice) + 1];
 	NodoHeap<NodoDij*> * hijoDerecho = this->heap[(2 * indice) + 2];
 
-	std::string papa = padre->obtenerValor()->getNombre();
-	std::string izquierdo = hijoIzquierdo->obtenerValor()->getNombre();
-	std::string derecho = hijoDerecho->obtenerValor()->getNombre();
+	if(padre && hijoIzquierdo && this->funcionDeComparacion(hijoIzquierdo, padre)){
 
-	if(this->funcionDeComparacion(hijoIzquierdo, padre)){
+		std::string papa = padre->obtenerValor()->getNombre();
+		std::string izquierdo = hijoIzquierdo->obtenerValor()->getNombre();
 
 		this->heap[indice] = hijoIzquierdo;
 		this->heap[(2 * indice) + 1] = padre;
@@ -199,7 +198,10 @@ void Heap::propagarParaAbajo(unsigned int indice){
 
 		this->propagarParaAbajo((2 * indice) + 1);
 
-	}else if(this->funcionDeComparacion(hijoDerecho, padre)){
+	}else if(padre && hijoDerecho && this->funcionDeComparacion(hijoDerecho, padre)){
+
+		std::string papa = padre->obtenerValor()->getNombre();
+		std::string derecho = hijoDerecho->obtenerValor()->getNombre();
 
 		this->heap[indice] = hijoDerecho;
 		this->heap[(2 * indice) + 2] = padre;

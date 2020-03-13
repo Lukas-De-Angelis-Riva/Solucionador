@@ -1,7 +1,7 @@
 #include <iostream>
 #include "./Laberinto/Laberinto.h"
-#include "Pruebas/pruebas.h"
-#include "Pruebas/Tester.h"
+#include "./Pruebas/pruebas.h"
+#include "./Pruebas/Tester.h"
 #include "./Solucionador/Solucionador.h"
 using namespace std;
 
@@ -13,7 +13,7 @@ int main(int argc, char** argv){
 	//std::string laberinto = argv[2];
 
 	std::string metodo = "Dijkstra";
-	std::string laberinto = "perfect65x65.bmp";
+	std::string laberinto = "Laberintote.bmp";
  	Solucionador * solucionador = new Solucionador(metodo, laberinto);
  	solucionador->solucionar();
  	delete solucionador;
@@ -29,6 +29,7 @@ int main(int argc, char** argv){
 	examinador->hacerPrueba(ejemplo5,"ejemplo5");
 
 	examinador->veredicto();
+
 	delete examinador;
 */
 

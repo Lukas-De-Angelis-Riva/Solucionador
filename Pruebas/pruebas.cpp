@@ -51,8 +51,8 @@ bool ejemplo1(){
 					 grafo->sonAdyacentes(vertice31, vertice32) &&
 					 grafo->sonAdyacentes(vertice32, vertice33);
 
-	//Solucion
 
+	//Solucion
 /*
 	Lista<std::string> * solucion= new Lista<std::string>;
 
@@ -63,11 +63,12 @@ bool ejemplo1(){
 	solucion->agregar(vertice31);
 	solucion->agregar(vertice41);
 */
-
-	Dijkstra * dijkstra = new Dijkstra(grafo, vertice02, vertice41);
+	cout << "aca";
+	Dijkstra * dijkstra = new Dijkstra(grafo, lab->obtenerEntrada(), lab->obtenerSalida());
 	dijkstra->resolver();
 	Lista<std::string> * solucion = dijkstra->getResultado();
 	lab->dibujarImagen(solucion, "SOLUCIONejemplo1.bmp");
+
 
 	//Se liberan recursos
 	delete lab;
@@ -346,6 +347,7 @@ bool ejemplo5(){
 							   grafo->pesoAdyacentes(vertice72, vertice92) == 2;
 	//Resultado
 	bool resultado = estanAristasCorrectas && estanPesosCorrectos;
+
 
 	Dijkstra * dijkstra = new Dijkstra(grafo, vertice08, vertice92);
 	dijkstra->resolver();
