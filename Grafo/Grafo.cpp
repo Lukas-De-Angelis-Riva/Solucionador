@@ -146,5 +146,6 @@ Lista<str>* Grafo::adyacentesAlVertice(str n){
 	while(listaDeVertices->avanzarCursor()){
 		listaDeNombres->agregar(listaDeVertices->obtenerCursor()->getNombre());
 	}
+	delete listaDeVertices;
 	return listaDeNombres;
 }

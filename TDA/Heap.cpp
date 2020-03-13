@@ -1,7 +1,6 @@
 #include "Heap.h"
 
 Heap::Heap(){
-
 	this->capacidad = 3;
 	this->tamanio = 0;
 	this->heap = new NodoHeap<NodoDij*>*[this->capacidad];
@@ -155,7 +154,7 @@ void Heap::removerMinimo(){
 	}
 
 	NodoHeap<NodoDij*> * aRemover = this->heap[0];
-
+	
 	if(this->tamanio != 1){
 
 		NodoHeap<NodoDij*> * ultimo = this->heap[this->tamanio - 1];
@@ -222,4 +221,5 @@ Heap::~Heap(){
 	}
 
 	delete []this->heap;
+	delete this->indices;
 }

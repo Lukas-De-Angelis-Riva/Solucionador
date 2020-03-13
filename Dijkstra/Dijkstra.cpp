@@ -67,6 +67,7 @@ Hash<NodoDij*>* Dijkstra::crearHashClave_nodoDij(){
 			hash->agregar(verticeActual,nodo);
 		}
 	}
+	delete vertices;
 	return hash;
 }
 
@@ -83,6 +84,7 @@ Heap* Dijkstra::crearHeapCandidatos(Hash<NodoDij*>* hash){
 			heap->insertar(nodoActual->getDistancia(),nodoActual);
 		}
 	}
+	delete vertices;
 	return heap;
 }
 
@@ -94,6 +96,7 @@ Lista<NodoDij*>* Dijkstra::obtenerNodosAdyacentes(Hash<NodoDij*>* hash, NodoDij*
 	while(adyacentes->avanzarCursor()){
 		nodosAdyacentes->agregar(hash->buscar(adyacentes->obtenerCursor()));
 	}
+	delete adyacentes;
 	return nodosAdyacentes;
 }
 /* Devuelve true en caso de que la distancia actual sea mayor que la distancia para ir hasta partida y de partida a actual.
@@ -122,7 +125,8 @@ void liberarMemoriaHash(Hash<NodoDij*>* hash){
 	hash->recorrer(lista);
 	lista->iniciarCursor();
 	while(lista->avanzarCursor()){
-		delete lista->obtenerCursor();
+		NodoDij* nodo = lista->obtenerCursor();
+		delete nodo;
 	}
 	delete lista;
 }
@@ -146,6 +150,7 @@ void Dijkstra::resolver(){
 				heap->disminuirClave(nodoAd,nodoAd->getDistancia());
 			}
 		}
+		delete adyacentes;
 		nodoActual->setVisitadoT();
 		nodoActual = heap->obtenerElementoMinimo();
 		heap->removerMinimo();
