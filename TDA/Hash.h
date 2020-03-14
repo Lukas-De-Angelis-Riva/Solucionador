@@ -6,7 +6,7 @@
 
 
 #define VALOR_CUALQUIERA 0
-const int NUMERO_PRIMO = 1033;
+const int NUMERO_PRIMO = 37;
 
 /*
  * Una tabla de hash sirve para almacenar elementos
@@ -33,7 +33,6 @@ template <class T> class Hash{
 		 */
 		Hash();
 
-		//TODO REHASH
 		/*
 		 * Pre: El elemento no esta en el hash
 		 * Post: Se ha agregado el elemento al hash
@@ -93,6 +92,12 @@ template <class T> class Hash{
 
 		/*
 		 * Pre:
+		 * Post: Se a expandido la capacidad
+		 */
+		void rehash();
+
+		/*
+		 * Pre:
 		 * Post: Se ha llenado la lista con los elementos dentro del hash
 		 */
 		void recorrer(Lista<NodoHash<T> * > *& aLLenar);
@@ -102,6 +107,19 @@ template <class T> class Hash{
 		 * Post: Devuelve un numero entero entre [0 - capacidad]
 		 */
 		unsigned int funcionHash(std::string clave);
+
+		/*
+		 * Pre:
+		 * Post: Obtiene el siguiente primo de N
+		 */
+		unsigned int siguientePrimo(unsigned int N);
+
+		/*
+		 * Pre:
+		 * Post: Devuelve true si esPrimo
+		 */
+		bool esPrimo(unsigned int n);
+
 
 
 };
@@ -142,6 +160,10 @@ unsigned int Hash<T>::funcionHash(std::string clave){
 template <class T>
 void Hash<T>::agregar(std::string clave, T elemento){
 
+	if(this->tamanio >= this->capacidad * 10){
+
+		this->rehash();
+	}
 
 	unsigned int posicion = this->funcionHash(clave);
 	ABB<NodoHash<T>* > * & lugarDeLaTabla = this->tabla[posicion];
@@ -156,6 +178,35 @@ void Hash<T>::agregar(std::string clave, T elemento){
 
 
 }
+
+template <class T>
+void Hash<T>::rehash(){
+
+	Lista<NodoHash<T> *> * listaNodos = new Lista<NodoHash<T> *>;
+	this->recorrer(listaNodos);
+	unsigned int nuevaCapacidad = this->siguientePrimo(this->capacidad * 10);
+	this->capacidad = nuevaCapacidad;
+	ABB<NodoHash<T>* > ** viejaTabla = this->tabla;
+	this->tabla = new ABB<NodoHash<T>* >*[this->capacidad];
+	for(unsigned int i = 0; i < this->capacidad; i++){
+
+		this->tabla[i] = NULL;
+	}
+	listaNodos->iniciarCursor();
+	while(listaNodos->avanzarCursor()){
+
+		NodoHash<T>* nodo = listaNodos->obtenerCursor();
+		unsigned int posicion = this->funcionHash(nodo->obtenerClave());
+		ABB<NodoHash<T>* > * & lugarDeLaTabla = this->tabla[posicion];
+		if(lugarDeLaTabla == NULL){
+			lugarDeLaTabla = new ABB<NodoHash<T> * >(funcionDeComparacion);
+		}
+		lugarDeLaTabla->agregar(nodo);
+	}
+
+	delete []viejaTabla;
+}
+
 
 template <class T>
 T Hash<T>::buscar(std::string clave){
@@ -173,6 +224,7 @@ T Hash<T>::buscar(std::string clave){
 	return encontrado->obtenerValor();
 
 }
+
 
 template <class T>
 void Hash<T>::cambiarElemento(std::string clave, T nuevoElemento){
@@ -272,6 +324,44 @@ void Hash<T>::borrar(std::string clave){
 	delete datoSimilar;
 
 }
+
+template <class T>
+bool Hash<T>::esPrimo(unsigned int n){
+
+    if (n <= 1)
+    	return false;
+    if (n <= 3)
+    	return true;
+    if (n%2 == 0 || n%3 == 0)
+    	return false;
+
+    for (unsigned int i=5; i*i<=n; i=i+6)
+        if (n%i == 0 || n%(i+2) == 0)
+           return false;
+
+    return true;
+}
+
+
+template <class T>
+unsigned int Hash<T>::siguientePrimo(unsigned int N){
+
+    if (N <= 1)
+        return 2;
+
+    unsigned int primo = N;
+    bool encontrado = false;
+
+    while (!encontrado) {
+        primo++;
+
+        if (esPrimo(primo))
+            encontrado = true;
+    }
+
+    return primo;
+}
+
 
 template <class T>
 Hash<T>::~Hash(){
