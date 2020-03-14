@@ -20,6 +20,10 @@ Recibe una imagen BMP de 16 bits que representa el laberinto, este cumple las si
 
 Métodos de resolución
 ---------------------
+ ![Laberinto](https://github.com/Lukas-De-Angelis-Riva/Solucionador/blob/master/Procedimiento/1Laberinto.png)| ![Lectura](https://github.com/Lukas-De-Angelis-Riva/Solucionador/blob/master/Procedimiento/2PasarAGrafo.png) |![Grafo](https://github.com/Lukas-De-Angelis-Riva/Solucionador/blob/master/Procedimiento/3Grafo.png) |![Método](https://github.com/Lukas-De-Angelis-Riva/Solucionador/blob/master/Procedimiento/4Resolvemos.png) |![Escritura](https://github.com/Lukas-De-Angelis-Riva/Solucionador/blob/master/Procedimiento/5Escribimos.png)
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+Laberinto           |  Lectura           |  Grafo             |  Método           |  Escritura
+
 
 El programa permite resolver el laberinto utilizando los siguientes métodos:
 * Dijkstra ✓
