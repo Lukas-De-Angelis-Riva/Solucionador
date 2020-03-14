@@ -26,7 +26,7 @@ Laberinto           |  Lectura           |  Grafo             |  Método        
 
 
 El programa permite resolver el laberinto utilizando los siguientes métodos:
-* Dijkstra ✓
+* Dijkstra [FIX]
 * Depth First Search ✓
 * Breadth First Search [WIP]
 * A* [WIP]
