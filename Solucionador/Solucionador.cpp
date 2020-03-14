@@ -19,6 +19,7 @@ void Solucionador::solucionar(){
 	iniciarReloj = clock();
 
 	//Se crea el laberinto a partir de la imagen
+
 	Laberinto * lab = new Laberinto(this->laberinto);
 	Grafo * grafo = lab->obtenerGrafo();
 	int cantidadDeVertices = grafo->cantidadVertices();
@@ -59,10 +60,10 @@ int Solucionador::interpretarMetodo(std::string metodo){
 	if(metodo == DIJKSTRA){
 
 		return METODO_DIJKSTRA;
-	}else if(metodo == DFS){
+	}else if(metodo == DepthFirstSearch){
 
 		return METODO_DFS;
-	}else if(metodo == BFS){
+	}else if(metodo == BreadthFirstSearch){
 
 		return METODO_BFS;
 	}else{

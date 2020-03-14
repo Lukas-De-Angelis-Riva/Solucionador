@@ -1,10 +1,11 @@
 #ifndef SELECCIONADOR_H_
 #define SELECCIONADOR_H_
 
+
 #include "../Grafo/Grafo.h"
 #include "../Dijkstra/Dijkstra.h"
+#include "../DFS/DFS.h"
 #include "../global.h"
-
 /*
  * Un Seleccionador se encarga de elegir el metodo para
  * solucionar el laberinto dependiendo de la eleccion del
@@ -19,7 +20,7 @@ class Seleccionador {
 		std::string inicio;
 		std::string fin;
 		Dijkstra * dijkstra;
-		//DFS * dfs;
+		DFS * dfs;
 		//BFS * bfs;
 		//AEstrella * aEstrella;
 
