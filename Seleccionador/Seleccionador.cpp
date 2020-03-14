@@ -7,6 +7,7 @@ Seleccionador::Seleccionador(Grafo * grafo, std::string inicio, std::string fin)
 	this->inicio = inicio;
 	this->fin = fin;
 	this->dijkstra = new Dijkstra(this->grafo, this->inicio, this->fin);
+	this->dfs = new DFS(this->grafo, this->inicio, this->fin);
 }
 
 
@@ -39,6 +40,8 @@ void Seleccionador::solucionarConDijkstra(){
 
 void Seleccionador::solucionarConDFS(){
 
+	this->dfs->resolver();
+	this->solucion = this->dfs->obtenerResultado();
 }
 
 void Seleccionador::solucionarConBFS(){
@@ -54,5 +57,6 @@ void Seleccionador::solucionarConAEstrella(){
 Seleccionador::~Seleccionador() {
 
 	delete this->dijkstra;
+	delete this->dfs;
 }
 

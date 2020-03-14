@@ -23,7 +23,7 @@ Métodos de resolución
 
 El programa permite resolver el laberinto utilizando los siguientes métodos:
 * Dijkstra ✓
-* Depth First Search [WIP]
+* Depth First Search ✓
 * Breadth First Search [WIP]
 * A* [WIP]
 

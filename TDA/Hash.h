@@ -6,7 +6,7 @@
 
 
 #define VALOR_CUALQUIERA 0
-const int NUMERO_PRIMO = 37;
+const int NUMERO_PRIMO = 1033;
 
 /*
  * Una tabla de hash sirve para almacenar elementos

@@ -9,8 +9,8 @@ const int VALOR_SALIDA = 2;
 const int VALOR_RUTA = 3;
 
 const std::string DIJKSTRA = "Dijkstra";
-const std::string BFS = "BFS";
-const std::string DFS = "DFS";
+const std::string BreadthFirstSearch = "BFS";
+const std::string DepthFirstSearch = "DFS";
 const std::string A_ESTRELLA = "A*";
 
 const int METODO_DIJKSTRA = 0;

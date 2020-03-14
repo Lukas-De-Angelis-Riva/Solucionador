@@ -20,12 +20,12 @@ bool esLaberintoValido(std::string rutaLaberinto){
 
 bool esMetodoValido(std::string metodo){
 
-	if(metodo != DIJKSTRA && metodo != DFS &&
-	   metodo != BFS && metodo != A_ESTRELLA){
+	if(metodo != DIJKSTRA && metodo != DepthFirstSearch &&
+	   metodo != BreadthFirstSearch && metodo != A_ESTRELLA){
 
 		cout << "Metodo ingresado invalido..." <<endl;
 		cout << "Metodos validos: " << endl;
-		cout << DIJKSTRA << " " << DFS << " " << BFS << " " << A_ESTRELLA << endl;
+		cout << DIJKSTRA << " " << DepthFirstSearch << " " << BreadthFirstSearch << " " << A_ESTRELLA << endl;
 		return false;
 	}
 	return true;
@@ -34,18 +34,18 @@ bool esMetodoValido(std::string metodo){
 
 int main(int argc, char** argv){
 
-	/*
+
 	if(argc != 3){
 		cout << "Faltan comandos..." << endl;
 		cout << "Ejecutar: ./SolucionadorDeLaberintos 'Método' 'Laberinto.bmp' ..." << endl;
 		return 0;
 	}
-	*/
-	//std::string metodo = argv[1];
-	//std::string laberinto = argv[2];
 
-	std::string metodo = "Dijkstra";
-	std::string laberinto = "Laberintote.bmp";
+	std::string metodo = argv[1];
+	std::string laberinto = argv[2];
+
+	//std::string metodo = "Dijkstra";
+	//std::string laberinto = "Laberintote.bmp";
 
 	if(!esLaberintoValido(laberinto) || !esMetodoValido(metodo)){
 
