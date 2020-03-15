@@ -89,6 +89,14 @@ class Heap{
 		 * Post: Devuelve true si izquierda < derecha
 		 */
 		bool funcionDeComparacion(NodoHeap<NodoDij*> * izquierda, NodoHeap<NodoDij*> * derecha);
+
+		/*
+		 * Pre:
+		 * Post: Intercambio las posiciones cuando propago para abajo
+		 */
+		void intercambiar(NodoHeap<NodoDij*> * padre, NodoHeap<NodoDij*> * hijo,
+						  unsigned int indicePadre, unsigned int indiceHijo);
+
 };
 
 

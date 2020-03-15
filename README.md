@@ -26,7 +26,7 @@ Laberinto           |  Lectura           |  Grafo             |  Método        
 
 
 El programa permite resolver el laberinto utilizando los siguientes métodos:
-* Dijkstra [FIX]
+* Dijkstra ✓
 * Depth First Search ✓
 * Breadth First Search [WIP]
 * A* [WIP]
@@ -37,4 +37,4 @@ Compilación y Ejecución
 
 Compilar con Eclipse IDE en una carpeta source y ejecutar con el siguiente comando:
 
-`./SolucionadorDeLaberintos "Método" "Laberinto.bmp"`
+`./SolucionadorDeLaberintos "Método" "Laberinto.bmp" "Output.bmp"`
