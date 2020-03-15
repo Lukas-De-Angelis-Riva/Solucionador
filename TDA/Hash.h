@@ -184,9 +184,11 @@ void Hash<T>::rehash(){
 
 	Lista<NodoHash<T> *> * listaNodos = new Lista<NodoHash<T> *>;
 	this->recorrer(listaNodos);
-	unsigned int nuevaCapacidad = this->siguientePrimo(this->capacidad * 10);
-	this->capacidad = nuevaCapacidad;
+
+	unsigned int viejaCapacidad = this->capacidad;
 	ABB<NodoHash<T>* > ** viejaTabla = this->tabla;
+
+	this->capacidad = this->siguientePrimo(this->capacidad * 10);
 	this->tabla = new ABB<NodoHash<T>* >*[this->capacidad];
 	for(unsigned int i = 0; i < this->capacidad; i++){
 
@@ -204,6 +206,14 @@ void Hash<T>::rehash(){
 		lugarDeLaTabla->agregar(nodo);
 	}
 
+
+	delete listaNodos;
+	for(unsigned int i = 0; i < viejaCapacidad; i++){
+
+		if(viejaTabla[i] != NULL)
+			delete viejaTabla[i];
+
+	}
 	delete []viejaTabla;
 }
 

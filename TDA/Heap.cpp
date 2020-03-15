@@ -1,4 +1,6 @@
 #include "Heap.h"
+#include <iostream>
+using namespace std;
 
 Heap::Heap(){
 	this->capacidad = 3;
@@ -7,15 +9,10 @@ Heap::Heap(){
 	this->indices = new Hash<int>;
 }
 
-
-
 bool Heap::funcionDeComparacion(NodoHeap<NodoDij*> * izquierda, NodoHeap<NodoDij*> * derecha){
 
 	return (*izquierda < *derecha);
 }
-
-
-
 
 
 bool Heap::estaVacio(){
@@ -177,8 +174,7 @@ void Heap::removerMinimo(){
 
 void Heap::propagarParaAbajo(unsigned int indice){
 
-	if(indice == this->tamanio - 1 ||
-	   this->tamanio - 1 < (2 * indice) + 2){
+	if(this->tamanio - 1 < (2 * indice) + 1){
 		return;
 	}
 
@@ -186,31 +182,39 @@ void Heap::propagarParaAbajo(unsigned int indice){
 	NodoHeap<NodoDij*> * hijoIzquierdo = this->heap[(2 * indice) + 1];
 	NodoHeap<NodoDij*> * hijoDerecho = this->heap[(2 * indice) + 2];
 
-	if(padre && hijoIzquierdo && this->funcionDeComparacion(hijoIzquierdo, padre)){
 
-		std::string papa = padre->obtenerValor()->getNombre();
-		std::string izquierdo = hijoIzquierdo->obtenerValor()->getNombre();
+	if(hijoDerecho != NULL){
 
-		this->heap[indice] = hijoIzquierdo;
-		this->heap[(2 * indice) + 1] = padre;
-		this->indices->cambiarElemento(izquierdo, indice);
-		this->indices->cambiarElemento(papa, (2 * indice) + 1);
+		if(this->funcionDeComparacion(hijoIzquierdo, hijoDerecho) &&
+		   this->funcionDeComparacion(hijoIzquierdo, padre)){
 
-		this->propagarParaAbajo((2 * indice) + 1);
+			this->intercambiar(padre, hijoIzquierdo, indice, (2 * indice) + 1);
 
-	}else if(padre && hijoDerecho && this->funcionDeComparacion(hijoDerecho, padre)){
+		}else if(this->funcionDeComparacion(hijoDerecho, padre)){
 
-		std::string papa = padre->obtenerValor()->getNombre();
-		std::string derecho = hijoDerecho->obtenerValor()->getNombre();
+			this->intercambiar(padre, hijoDerecho, indice, (2 * indice) + 2);
 
-		this->heap[indice] = hijoDerecho;
-		this->heap[(2 * indice) + 2] = padre;
-		this->indices->cambiarElemento(derecho, indice);
-		this->indices->cambiarElemento(papa, (2 * indice) + 2);
+		}else if(this->funcionDeComparacion(hijoIzquierdo, padre)){
 
-		this->propagarParaAbajo((2 * indice) + 2);
+			this->intercambiar(padre, hijoIzquierdo, indice, (2 * indice) + 1);
 
+		}
 	}
+}
+
+void Heap::intercambiar(NodoHeap<NodoDij*> * padre, NodoHeap<NodoDij*> * hijo,
+		 	 	  	    unsigned int indicePadre, unsigned int indiceHijo){
+
+	std::string nombrePadre = padre->obtenerValor()->getNombre();
+	std::string nombreHijo = hijo->obtenerValor()->getNombre();
+
+	this->heap[indicePadre] = hijo;
+	this->heap[indiceHijo] = padre;
+	this->indices->cambiarElemento(nombreHijo, indicePadre);
+	this->indices->cambiarElemento(nombrePadre, indiceHijo);
+
+	this->propagarParaAbajo(indiceHijo);
+
 
 }
 

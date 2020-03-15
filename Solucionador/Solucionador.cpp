@@ -2,9 +2,10 @@
 
 using namespace std;
 
-Solucionador::Solucionador(std::string metodo, std::string laberinto) {
+Solucionador::Solucionador(std::string metodo, std::string laberinto, std::string rutaSolucion) {
 
 	this->laberinto = laberinto;
+	this->rutaSolucion = rutaSolucion;
 	this->metodo = this->interpretarMetodo(metodo);
 
 }
@@ -40,13 +41,14 @@ void Solucionador::solucionar(){
 	tiempo = ((double) (pararReloj - iniciarReloj)) / CLOCKS_PER_SEC;
 	cout << "Grafo solucionado en: " << tiempo << " Segundos..." <<endl;
 
-	cout << "Graficando solucion..." << endl;
-
 	//Se obtiene la solucion y se convierte en una imagen
 	Lista<std::string> * solucion = seleccionador->obtenerSolucion();
-	lab->dibujarImagen(solucion,"SOLUCION" + this->laberinto);
 
-	cout << "Imagen solucion creada con nombre: " << ("SOLUCION" + this->laberinto) << endl;
+	cout << "Graficando solucion..." << endl;
+
+	lab->dibujarImagen(solucion,this->rutaSolucion);
+
+	cout << "Imagen solucion creada con nombre: " << (this->rutaSolucion) << endl;
 
 	//Liberar recursos
 	delete lab;

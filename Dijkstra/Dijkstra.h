@@ -28,6 +28,7 @@ class Dijkstra{
 		/*Devuelve el resultado. Primero se debe llamar a resolver, de lo contrario resultado estará vacio.*/
 		Lista<std::string>* getResultado();
 
+		int getLargoCamino();
 
 	private:
 
@@ -38,6 +39,8 @@ class Dijkstra{
 		Grafo* grafo;
 
 		Lista<std::string>* resultado;
+
+		int largoCamino;
 
 		Hash<NodoDij*>* crearHashClave_nodoDij();
 

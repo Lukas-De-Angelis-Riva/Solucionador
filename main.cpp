@@ -35,24 +35,22 @@ bool esMetodoValido(std::string metodo){
 int main(int argc, char** argv){
 
 
-	if(argc != 3){
+	if(argc != 4){
 		cout << "Faltan comandos..." << endl;
-		cout << "Ejecutar: ./SolucionadorDeLaberintos 'Método' 'Laberinto.bmp' ..." << endl;
+		cout << "Ejecutar: ./SolucionadorDeLaberintos 'Método' 'Laberinto.bmp' 'Output.bmp'..." << endl;
 		return 0;
 	}
 
 	std::string metodo = argv[1];
 	std::string laberinto = argv[2];
-
-	//std::string metodo = "Dijkstra";
-	//std::string laberinto = "Laberintote.bmp";
+	std::string rutaSolucion = argv[3];
 
 	if(!esLaberintoValido(laberinto) || !esMetodoValido(metodo)){
 
 		return 0;
 	}
 
- 	Solucionador * solucionador = new Solucionador(metodo, laberinto);
+ 	Solucionador * solucionador = new Solucionador(metodo, laberinto, rutaSolucion);
  	solucionador->solucionar();
  	delete solucionador;
 

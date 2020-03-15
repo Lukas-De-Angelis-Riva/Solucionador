@@ -14,6 +14,7 @@ Dijkstra::Dijkstra(Grafo* g, str vIni, str vFin){
 		this->grafo = g;
 		this->partida = vIni;
 		this->llegada = vFin;
+		this->largoCamino = 0;
 		this->resultado = NULL;
 	}else{
 		throw str ("Algún vértice, o ambos vertices no existen en el grafo");
@@ -104,8 +105,7 @@ Lista<NodoDij*>* Dijkstra::obtenerNodosAdyacentes(Hash<NodoDij*>* hash, NodoDij*
 */
 
 bool Dijkstra::mejoraDis(NodoDij* llegada, NodoDij* salida){
-	return llegada->getDistancia() > 
-					salida->getDistancia() + this->grafo->pesoAdyacentes(llegada->getNombre(),salida->getNombre());
+	return (llegada->getDistancia() > (salida->getDistancia() + this->grafo->pesoAdyacentes(llegada->getNombre(),salida->getNombre())));
 }
 /*Actualiza el peso del nodo llegada.*/
 void Dijkstra::actualizarPeso(NodoDij* llegada, NodoDij* salida){
@@ -150,12 +150,14 @@ void Dijkstra::resolver(){
 				heap->disminuirClave(nodoAd,nodoAd->getDistancia());
 			}
 		}
+
 		delete adyacentes;
 		nodoActual->setVisitadoT();
 		nodoActual = heap->obtenerElementoMinimo();
 		heap->removerMinimo();
 	}
 	this->resultado = armarResultado(nodoActual); //actual en este caso ya es la llegada.
+	this->largoCamino = (int)nodoActual->getDistancia();
 	delete heap;
 	liberarMemoriaHash(hash);
 	delete hash;
@@ -165,4 +167,8 @@ void Dijkstra::resolver(){
 /*Devuelve el resultado. Primero se debe llamar a resolver, de lo contrario resultado estará vacio.*/
 Lista<str>* Dijkstra::getResultado(){
 	return this->resultado;
+}
+
+int Dijkstra::getLargoCamino(){
+	return this->largoCamino;
 }

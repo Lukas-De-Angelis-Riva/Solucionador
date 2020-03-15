@@ -18,6 +18,7 @@ class Solucionador {
 	private:
 
 		std::string laberinto;
+		std::string rutaSolucion;
 		int metodo;
 
 	public:
@@ -27,7 +28,7 @@ class Solucionador {
 		 * Post: Se ha creado un solucionador en condiciones de
 		 * 		 solucionar
 		 */
-		Solucionador(std::string metodo, std::string laberinto);
+		Solucionador(std::string metodo, std::string laberinto, std::string rutaSolucion);
 
 		/*
 		 * Pre:
